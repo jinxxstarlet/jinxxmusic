@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amelyn Music Player</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Satisfy&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://i.pinimg.com/736x/ef/5f/8a/ef5f8a06b3179ab621c7f9ac73c5ac1e.jpg');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .player-container {
+            background-color: #f2a2a9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .playlist {
+            background-color: #facfd9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .song-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="player-container">
+        <h2>Amelyn Music Player</h2>
+        <img id="songImage" class="song-image" src="song2.jpg" alt="Song Image">
+        <h4 id="songTitle">Song 2</h4>
+        <audio id="audioPlayer" controls>
+            <source id="audioSource" src="audio/X2Download.app - Blind Love (320 kbps).mp3" type="audio/mp3">
+        </audio>
+        <br>
+        <button onclick="prevSong()">Prev</button>
+        <button onclick="playPause()">Play/Pause</button>
+        <button onclick="nextSong()">Next</button>
+        <button onclick="stopSong()">Stop</button>
+
+        <div class="playlist">
+            <h3>Main Playlist</h3>
+            <ul id="songList">
+                <li class="playlist-item" onclick="playSong('song2.mp3', 'song2.jpg', 'Song 2')">
+                    <img src="song2.jpg" alt="Song 2"> Song 2
+                </li>
+                <li class="playlist-item" onclick="playSong('song3.mp3', 'song3.jpg', 'Song 3')">
+                    <img src="song3.jpg" alt="Song 3"> Song 3
+                </li>
+                <li class="playlist-item" onclick="playSong('song5.mp3', 'song5.jpg', 'Song 5')">
+                    <img src="song5.jpg" alt="Song 5"> Song 5
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let songs = [
+            { src: 'song2.mp3', img: 'song2.jpg', title: 'Song 2' },
+            { src: 'song3.mp3', img: 'song3.jpg', title: 'Song 3' },
+            { src: 'song5.mp3', img: 'song5.jpg', title: 'Song 5' }
+        ];
+        let currentIndex = 0;
+        let player = document.getElementById("audioPlayer");
+        let audioSource = document.getElementById("audioSource");
+        let songImage = document.getElementById("songImage");
+        let songTitle = document.getElementById("songTitle");
+
+        function playPause() {
+            if (player.paused) {
+                player.play();
+            } else {
+                player.pause();
+            }
+        }
+
+        function nextSong() {
+            currentIndex = (currentIndex + 1) % songs.length;
+            changeSong(songs[currentIndex].src, songs[currentIndex].img, songs[currentIndex].title);
+        }
+
+        function prevSong() {
+            currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+            changeSong(songs[currentIndex].src, songs[currentIndex].img, songs[currentIndex].title);
+        }
+
+        function stopSong() {
+            player.pause();
+            player.currentTime = 0;
+        }
+
+        function playSong(song, img, title) {
+            changeSong(song, img, title);
+        }
+
+        function changeSong(song, img, title) {
+            audioSource.src = song;
+            songImage.src = img;
+            songTitle.innerText = title;
+            player.load();
+            player.play();
+        }
+    </script>
+</body>
+
+</html>
