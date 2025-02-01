@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amelyn Music Player</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Satisfy&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://i.pinimg.com/736x/ef/5f/8a/ef5f8a06b3179ab621c7f9ac73c5ac1e.jpg');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .player-container {
+            background-color: #f2a2a9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .playlist {
+            background-color: #facfd9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .song-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px;
+            cursor: pointer;
+            border-bottom: 1px solid #ccc;
+            font-family: 'Satisfy', cursive;
+            font-size: 18px;
+        }
+
+        .playlist-item:hover {
+            background-color: #de5774;
+        }
+
+        .playlist-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        h2 {
+            background-color: #facfd9;
+            margin: 10px 0;
+            font-family: 'Kaushan Script', cursive;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="player-container">
+        <h2>Amelyn Music Player</h2>
+        <img id="songImage" class="song-image" src="https://www.ren0625.com/wp/wp-content/uploads/2024/12/S3_7117.jpg"
+            alt="Song Image">
+        <h4>れん - 一切合切</h4>
+        <audio id="audioPlayer" controls>
+            <source id="audioSource" src="Issa_Gassai.mp3" type="audio/mp3">
+        </audio>
+        <br>
+        <button onclick="prevSong()">Prev</button>
+        <button onclick="playPause()">Play/Pause</button>
+        <button onclick="nextSong()">Next</button>
+        <button onclick="stopSong()">Stop</button>
+
+        <div class="playlist">
+            <h3>Music Playlist</h3>
+            <ul id="songList">
+                <li class="playlist-item"
+                    onclick="playSong('THIRD-Rent It From You.mp3', 'https://www.ren0625.com/wp/wp-content/uploads/2024/12/S3_7117.jpg')">
+                    <img src="https://www.ren0625.com/wp/wp-content/uploads/2024/12/S3_7117.jpg" alt="Song 1"> 一切合切 - れん
+                </li>
+                <li class="playlist-item" onclick="playSong('song2.mp3', 'song2.jpg')">
+                    <img src="song2.jpg" alt="Song 2"> Song 2
+                </li>
+                <li class="playlist-item" onclick="playSong('song3.mp3', 'song3.jpg')">
+                    <img src="song3.jpg" alt="Song 3"> Song 3
+                </li>
+                <li class="playlist-item" onclick="playSong('song4.mp3', 'song4.jpg')">
+                    <img src="song4.jpg" alt="Song 4"> Song 4
+                </li>
+                <li class="playlist-item" onclick="playSong('song5.mp3', 'song5.jpg')">
+                    <img src="song5.jpg" alt="Song 5"> Song 5
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let songs = [
+            { src: 'song1.mp3', img: 'song1.jpg' },
+            { src: 'song2.mp3', img: 'song2.jpg' },
+            { src: 'song3.mp3', img: 'song3.jpg' },
+            { src: 'song4.mp3', img: 'song4.jpg' },
+            { src: 'song5.mp3', img: 'song5.jpg' },
+        ];
+        let currentIndex = 0;
+        let player = document.getElementById("audioPlayer");
+        let audioSource = document.getElementById("audioSource");
+        let songImage = document.getElementById("songImage");
+
+        function playPause() {
+            if (player.paused) {
+                player.play();
+            } else {
+                player.pause();
+            }
+        }
+
+        function nextSong() {
+            currentIndex = (currentIndex + 1) % songs.length;
+            changeSong(songs[currentIndex].src, songs[currentIndex].img);
+        }
+
+        function prevSong() {
+            currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+            changeSong(songs[currentIndex].src, songs[currentIndex].img);
+        }
+
+        function stopSong() {
+            player.pause();
+            player.currentTime = 0;
+        }
+
+        function playSong(song, img) {
+            changeSong(song, img);
+        }
+
+        function changeSong(song, img) {
+            audioSource.src = song;
+            songImage.src = img;
+            player.load();
+            player.play();
+        }
+    </script>
+</body>
+
+</html>
